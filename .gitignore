@@ -1,0 +1,140 @@
+# ==============================================================================
+# Rifq Platform - Monorepo Git Ignore
+# Covers: Node.js, Express, React (Web), Flutter / Mobile, Secrets, OS & IDEs
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Sensitive Credentials (NEVER commit secrets!)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.pfx
+*.p12
+service-account*.json
+firebase-adminsdk*.json
+google-services.json
+GoogleService-Info.plist
+
+# ------------------------------------------------------------------------------
+# Operating System Temporary & Metadata Files
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ------------------------------------------------------------------------------
+# Node.js & Web (React, Vite, Next.js, Bundlers)
+# ------------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+
+# Build & Bundler Outputs
+dist/
+build/
+out/
+.next/
+.cache/
+.parcel-cache/
+.turbo/
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# TypeScript Cache
+*.tsbuildinfo
+
+# ------------------------------------------------------------------------------
+# Mobile & Cross-Platform (Flutter, Dart, Android, iOS, React Native)
+# ------------------------------------------------------------------------------
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# Android
+**/.gradle/
+**/local.properties
+**/android/app/build/
+**/android/captures/
+*.keystore
+*.jks
+
+# iOS
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# React Native / Expo
+.expo/
+.expo-shared/
+
+# ------------------------------------------------------------------------------
+# IDEs, Code Editors & Tooling
+# ------------------------------------------------------------------------------
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# VS Code (preserve shared project configs, ignore workspace state)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ------------------------------------------------------------------------------
+# Runtime Logs, Dumps & Temp Files
+# ------------------------------------------------------------------------------
+logs/
+*.log
+temp/
+tmp/
+*.pid
+*.seed
+*.pid.lock

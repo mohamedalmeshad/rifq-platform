@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة رفق — تسجيل الدخول | Rifq Platform</title>
+
+  <!-- Google Fonts: IBM Plex Sans Arabic (UI) + Amiri (Quranic Verse) + Inter (Latin/Numbers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans Arabic"', 'Inter', 'sans-serif'],
+            quran: ['Amiri', 'serif'],
+          },
+          colors: {
+            rifq: {
+              emerald: '#064E3B',
+              emeraldHover: '#047857',
+              emeraldDark: '#042F2E',
+              gold: '#C59B43',
+              goldLight: '#E3C376',
+              canvas: '#F8F7F4',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Smooth base typography & Quranic verse rendering */
+    body {
+      font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
+      background-color: #F8F7F4;
+      color: #0F172A;
+    }
+
+    .font-quran {
+      font-family: 'Amiri', serif;
+      line-height: 2.15;
+    }
+
+    /* Subtle animation for toast & modal */
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-slide {
+      animation: fadeSlideDown 0.25s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen w-full bg-[#F8F7F4] text-[#0F172A] antialiased selection:bg-emerald-100 selection:text-[#064E3B]">
+
+  <!-- =====================================================================
+       REUSABLE SVG SYMBOL DEFINITIONS (Official Rifq Brand Logo)
+       Source: brand_assets/logo_icon/rifq_logo.svg
+  ===================================================================== -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true">
+    <symbol id="rifq-logo" viewBox="520 540 1008 960">
+      <path fill="#105B43" d="M547.407 779.274C560.024 783.629 577.464 791.063 589.751 796.575C590.733 822.109 589.933 853.503 589.924 879.482L589.794 1038.09C637.737 1067.98 693.134 1098.74 742.316 1127.59L1024.07 1293.75L1458.23 1038.08L1458.19 796.716C1471.76 790.607 1487.01 784.749 1500.89 779.119L1500.83 970.55C1500.84 1000.25 1501.51 1032.51 1500.51 1061.97C1462.29 1086.77 1412.51 1114 1372.66 1137.24L1135.26 1277.13C1112.73 1291.15 1088.74 1303.8 1066.18 1318.16C1091.76 1334.56 1122.55 1351.71 1149.01 1367.33L1338.15 1478.67C1327.78 1478.98 1258.85 1479.1 1255.49 1477.34C1191.62 1443.78 1084.25 1376.02 1024.09 1342.52C1007.81 1351.51 990.726 1362.21 974.512 1371.72L850.473 1444.73C833.409 1454.71 809.633 1470.89 791.415 1477.59C788.186 1478.78 768.681 1478.29 763.778 1478.3L709.816 1478.64C715.75 1474.82 722.059 1471.43 728.141 1467.83C812.591 1417.88 898.087 1369.19 982.023 1318.4C972.071 1311.13 954.009 1301.15 943.061 1294.71L869.892 1251.82L668.934 1133.35C632.098 1111.82 582.429 1084.83 547.637 1061.84C546.292 1031.42 547.368 993.348 547.385 962.477L547.407 779.274Z"/>
+      <path fill="#C8A255" d="M1297.43 777.951C1341.88 763.022 1381.27 747.586 1424.57 730.097L1424.26 1019.84C1394.1 1041.11 1345.44 1066.7 1311.76 1081.25C1264.74 1101.55 1223.38 1116.25 1178.92 1142.75C1151.26 1159.15 1125.07 1177.92 1100.64 1198.83C1085.01 1212.3 1072.29 1226.05 1057.35 1239.59C1051.86 1244.58 1031.08 1256.18 1024.02 1260.05C1016.54 1256.13 995.398 1244.07 989.825 1238.86C976.343 1226.27 964.061 1213.08 949.878 1200.69C926.602 1180.37 901.526 1162.21 874.96 1146.43C821.266 1114.16 779.875 1101.16 724.03 1075.7C689.311 1059.65 655.836 1041.03 623.884 1020C623.175 979.494 623.84 937.19 623.867 896.594L623.832 730.23C634.134 733.799 647.731 739.793 658.207 743.918C679.92 752.498 701.77 760.726 723.749 768.599C762.945 782.614 812.224 796.776 849.243 812.099C890.313 829.415 928.636 852.632 963.003 881.014C976.302 891.932 991.36 903.597 1001.15 917.728C993.038 927.023 980.611 935.778 970.603 943.275C944.944 920.588 925.527 902.047 895.856 883.436C825.216 839.126 742.427 822.555 665.158 791.712C666.426 858.738 665.295 929.006 665.364 996.4C693.701 1013.95 723.244 1029.46 753.774 1042.84C779.067 1054.02 804.968 1064.08 830.348 1075.47C900.269 1106.86 948.245 1141.93 1003.32 1193.68C1004.27 1144.17 1002.45 1092.93 1004.43 1043.39C1004.5 1041.61 1005.54 1038.47 1006.92 1037.29C1018.71 1027.27 1032.13 1018.14 1044.88 1009.26C1045.68 1070.07 1044.32 1132.24 1044.95 1193.54C1115.25 1126.75 1165.12 1097.62 1254.23 1059.92C1302.99 1040.12 1338.01 1023.59 1382.98 996.542C1383.94 928.918 1383.15 859.607 1383.16 791.865C1368.1 797.817 1352.88 803.359 1337.53 808.484C1323.2 791.852 1317.35 786.778 1297.43 777.951Z"/>
+      <path fill="#105B43" d="M1249.57 798.328C1252.7 798.196 1255.83 798.146 1258.97 798.179C1323.59 798.665 1351.58 869.565 1314.31 918.289C1274.21 970.706 1201.68 943.112 1146.17 965.367C1117.71 976.776 1105.6 986.145 1083.86 1007.3C1087.12 998.899 1090.17 991.546 1094.63 983.771C1119.39 940.605 1166.81 917.714 1214.92 912.567C1241.56 909.717 1283 913.62 1289.97 879.618C1291.59 871.689 1288.17 861.511 1283.3 855.244C1265.25 830.471 1231.02 843.996 1208.44 853.769C1166.82 871.787 1127.3 898.442 1093.43 928.528C1066.94 952.06 1042.78 975.597 1014.43 997.069C958.94 1036.46 895.278 1060.17 828.792 1033.8C759.662 1006.38 733.655 922.577 760.717 856.744C760.726 867.428 760.591 877.822 761.607 888.455C767.458 949.669 804.915 995.691 868.011 1002.41C962.504 1012.48 1021.29 932.286 1086.6 879.739C1128.58 845.973 1195.88 804.132 1249.57 798.328Z"/>
+      <path fill="#105B43" d="M1005.48 570.604C1018.65 569.931 1029.57 569.589 1042.89 570.663C1093.62 575.17 1140.46 599.68 1173.09 638.783C1204.44 676.24 1221.25 727.475 1217.04 776.198C1202.2 781.511 1187.47 787.142 1172.87 793.087C1176.15 766.477 1176.97 745.638 1169.09 719.665C1150.72 659.151 1101.12 620.878 1039.68 612.751C1027.57 611.817 1016.52 611.774 1004.45 613.404C963.866 618.877 927.16 640.351 902.504 673.043C874.56 710.44 869.479 748.523 875.912 793.173C862.274 788.446 845.508 781.275 831.375 776.032C827.454 727.001 842.788 678.371 874.124 640.458C906.839 600.584 954.131 575.435 1005.48 570.604Z"/>
+      <path fill="#C8A255" d="M1022.92 669.544C1026.85 670.471 1045.13 690.615 1049.42 694.969L1084.29 694.764C1084.37 706.272 1084.37 717.781 1084.3 729.289C1092.49 737.346 1100.62 745.468 1108.69 753.653C1100.8 761.745 1092.79 769.706 1084.64 777.532L1084 812.612C1072.24 812.81 1060.49 812.914 1048.73 812.924C1040.8 820.757 1032.43 829.858 1024.68 837.977C1021.44 836.378 1003.95 817.169 999.497 812.88C988.069 812.903 975.415 813.208 964.108 812.457L963.927 777.777C957.655 770.89 946.046 760.312 938.967 753.455C946.818 745.44 955.718 737.265 963.801 729.21L963.501 694.541L998.536 694.973C1006.61 687.398 1015.26 677.722 1022.92 669.544ZM982.286 712.544C982.213 719.902 982.368 728.911 981.932 736.133L965.258 753.798L982.054 771.089C982.468 779.444 982.567 786.675 982.491 795.044C990.322 795.104 999.436 794.945 1007.13 795.647C1012.92 801.374 1018.6 807.215 1024.16 813.164C1029.58 807.378 1035.64 800.581 1041.34 795.227C1049.59 795.118 1057.83 795.055 1066.08 795.037C1066.01 787.31 1065.75 778.747 1066.07 771.094L1083.28 753.686C1077.71 747.987 1071.53 741.918 1066.15 736.131L1065.95 712.863C1058.14 712.754 1049.3 712.835 1041.59 712.257C1037.91 708.728 1026.68 696.476 1023.34 695.665C1018.26 700.869 1012.32 707.27 1006.97 711.996C998.746 712.311 990.517 712.493 982.286 712.544Z"/>
+      <path fill="#C8A255" d="M825.221 1260.39C830.931 1263.18 836.604 1266.21 842.024 1269.53C869.182 1286.17 898.049 1300.96 924.939 1317.93C885.915 1343.23 835.295 1371.17 794.392 1394.95C772.8 1407.76 751.295 1420.72 729.878 1433.83C736.901 1417.96 755.227 1387.34 764.136 1371.34L825.221 1260.39Z"/>
+      <path fill="#C8A255" d="M1221.89 1260.95C1224.73 1262.54 1309.21 1416.24 1317.97 1433.39C1299 1423.27 1274.82 1407.8 1255.98 1396.49C1213.52 1371.66 1164.36 1343.96 1123.26 1318.06C1141.99 1305.27 1164.85 1294.8 1184.25 1282.6C1196.2 1275.08 1209.42 1267.52 1221.89 1260.95Z"/>
+    </symbol>
+  </svg>
+
+  <!-- =====================================================================
+       SUBTLE SUCCESS TOAST (Non-blocking feedback on valid submission)
+  ===================================================================== -->
+  <div
+    id="success-toast"
+    role="status"
+    aria-live="polite"
+    class="hidden fixed top-5 inset-x-4 sm:inset-x-auto sm:start-6 z-50 max-w-sm rounded-xl bg-[#064E3B] text-white px-4 py-3.5 shadow-lg border border-emerald-700/60 flex items-center gap-3 animate-fade-slide"
+  >
+    <div class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+      <svg class="w-4 h-4 text-[#E3C376]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <div class="text-xs sm:text-sm leading-relaxed">
+      <p id="toast-title" class="font-semibold">تم تسجيل الدخول بنجاح</p>
+      <p id="toast-subtitle" class="text-emerald-100/85 text-xs">جارٍ توجيهك إلى لوحة التحكم...</p>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MAIN SPLIT-SCREEN SHELL
+  ===================================================================== -->
+  <div class="min-h-screen w-full flex flex-col lg:flex-row">
+
+    <!-- ===================================================================
+         MOBILE BRAND HEADER (Visible on screens < lg)
+    =================================================================== -->
+    <header class="lg:hidden relative overflow-hidden bg-gradient-to-br from-[#064E3B] to-[#042F2E] text-white px-5 py-6">
+      <!-- Low-opacity Islamic Geometric Lattice Pattern -->
+      <svg class="absolute inset-0 w-full h-full opacity-[0.07] pointer-events-none" aria-hidden="true">
+        <defs>
+          <pattern id="mobile-lattice" width="64" height="64" patternUnits="userSpaceOnUse">
+            <path d="M32 4 L38 19 L53 13 L47 28 L62 34 L47 40 L53 55 L38 49 L32 64 L26 49 L11 55 L17 40 L2 34 L17 28 L11 13 L26 19 Z" fill="none" stroke="#E3C376" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#mobile-lattice)" />
+      </svg>
+
+      <div class="relative z-10 flex items-center justify-between gap-3">
+        <!-- Mobile Logo + Wordmark -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-white flex items-center justify-center p-1 shadow-sm shrink-0">
+            <img src="../brand_assets/logo_icon/rifq_logo.svg" alt="شعار منصة رفق" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <div class="flex items-baseline gap-1">
+              <span data-i18n="brandName" class="text-2xl font-bold tracking-tight text-white">رفق</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#E3C376] inline-block"></span>
+            </div>
+            <p data-i18n="brandShort" class="text-[11px] text-emerald-100/80">منصة الحلقات القرآنية والعلوم الشرعية</p>
+          </div>
+        </div>
+
+        <!-- Mobile Language Toggle -->
+        <button
+          type="button"
+          onclick="toggleLanguage()"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-colors"
+        >
+          <svg class="w-3.5 h-3.5 text-[#E3C376]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.5 0 4.5-4.03 4.5-9S14.5 3 12 3m0 18c-2.5 0-4.5-4.03-4.5-9S9.5 3 12 3m-8.5 9h17" />
+          </svg>
+          <span data-i18n="langToggle">EN</span>
+        </button>
+      </div>
+
+      <!-- Mobile Framed Verse -->
+      <p dir="rtl" class="relative z-10 mt-4 pt-3 border-t border-white/10 font-quran text-center text-base text-amber-100/95">
+        ﴿ وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ ﴾
+      </p>
+    </header>
+
+    <!-- ===================================================================
+         1. LOGIN FORM PANEL (Right in RTL Desktop, Left in LTR Desktop)
+    =================================================================== -->
+    <main class="w-full lg:w-[54%] xl:w-[52%] flex-1 flex flex-col justify-between bg-[#F8F7F4] px-5 py-6 sm:px-10 sm:py-8 lg:px-14 xl:px-20">
+
+      <!-- Desktop Top Bar: Clean Language Toggle -->
+      <div class="hidden lg:flex items-center justify-end w-full max-w-md mx-auto">
+        <button
+          type="button"
+          onclick="toggleLanguage()"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:border-[#C59B43]/60 text-xs font-semibold text-[#0F172A] shadow-2xs transition-all"
+          aria-label="Switch Language"
+        >
+          <svg class="w-4 h-4 text-[#064E3B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.5 0 4.5-4.03 4.5-9S14.5 3 12 3m0 18c-2.5 0-4.5-4.03-4.5-9S9.5 3 12 3m-8.5 9h17" />
+          </svg>
+          <span data-i18n="langToggle">English</span>
+        </button>
+      </div>
+
+      <!-- Centered Login Card -->
+      <section class="w-full max-w-md mx-auto my-6 lg:my-auto">
+        <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 sm:p-9">
+
+          <!-- Rifq Logo + Styled Wordmark -->
+          <div class="flex items-center gap-3 mb-7">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center p-1.5 shrink-0">
+              <img src="../brand_assets/logo_icon/rifq_logo.svg" alt="شعار منصة رفق" class="w-full h-full object-contain" />
+            </div>
+            <div class="flex flex-col">
+              <div class="flex items-center gap-1.5">
+                <span data-i18n="brandName" class="text-2xl font-bold tracking-tight text-[#064E3B] leading-none">رفق</span>
+                <span class="w-2 h-2 rounded-xs rotate-45 bg-[#C59B43] inline-block mt-0.5"></span>
+              </div>
+              <span data-i18n="brandTagSmall" class="text-[11px] font-medium text-[#475569] mt-1">منصة رفق التعليمية</span>
+            </div>
+          </div>
+
+          <!-- Welcome Heading -->
+          <div class="mb-6">
+            <h1 data-i18n="welcomeTitle" class="text-2xl font-bold text-[#0F172A] tracking-tight">
+              أهلاً بك مجدداً
+            </h1>
+            <p data-i18n="welcomeSubtitle" class="text-sm text-[#475569] mt-1.5 leading-relaxed">
+              سجّل دخولك لمتابعة رحلتك التعليمية
+            </p>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" novalidate class="space-y-4">
+
+            <!-- Email Field -->
+            <div>
+              <label for="email" data-i18n="emailLabel" class="block text-xs font-semibold text-[#0F172A] mb-1.5">
+                البريد الإلكتروني
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 ps-3.5 flex items-center pointer-events-none">
+                  <svg id="email-icon" class="w-4 h-4 text-slate-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  dir="ltr"
+                  autocomplete="email"
+                  placeholder="name@example.com"
+                  class="w-full ps-10 pe-3.5 py-3 rounded-xl text-sm bg-white border border-slate-200 text-[#0F172A] placeholder:text-slate-400 text-start outline-none transition-all focus:border-[#064E3B] focus:ring-2 focus:ring-emerald-900/10"
+                />
+              </div>
+              <p id="email-error" class="hidden mt-1.5 text-xs text-red-600 font-medium"></p>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+              <label for="password" data-i18n="passwordLabel" class="block text-xs font-semibold text-[#0F172A] mb-1.5">
+                كلمة المرور
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 ps-3.5 flex items-center pointer-events-none">
+                  <svg id="password-icon" class="w-4 h-4 text-slate-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  dir="ltr"
+                  autocomplete="current-password"
+                  placeholder="••••••••"
+                  class="w-full ps-10 pe-11 py-3 rounded-xl text-sm bg-white border border-slate-200 text-[#0F172A] placeholder:text-slate-400 text-start outline-none transition-all focus:border-[#064E3B] focus:ring-2 focus:ring-emerald-900/10"
+                />
+                <!-- Show / Hide Password Button -->
+                <button
+                  type="button"
+                  id="toggle-password"
+                  onclick="togglePasswordVisibility()"
+                  class="absolute inset-y-0 end-0 pe-3.5 flex items-center text-slate-400 hover:text-[#064E3B] transition-colors"
+                  aria-label="Toggle password visibility"
+                >
+                  <!-- Eye Open -->
+                  <svg id="eye-open" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <!-- Eye Closed -->
+                  <svg id="eye-closed" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                  </svg>
+                </button>
+              </div>
+              <p id="password-error" class="hidden mt-1.5 text-xs text-red-600 font-medium"></p>
+            </div>
+
+            <!-- Remember Me & Forgot Password Row -->
+            <div class="flex items-center justify-between pt-1">
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  class="w-4 h-4 rounded border-slate-300 text-[#064E3B] accent-[#064E3B] focus:ring-[#064E3B]"
+                />
+                <span data-i18n="rememberMe" class="text-xs font-medium text-[#475569]">تذكرني</span>
+              </label>
+
+              <button
+                type="button"
+                onclick="openForgotModal()"
+                data-i18n="forgotPassword"
+                class="text-xs font-semibold text-[#064E3B] hover:text-[#047857] transition-colors"
+              >
+                نسيت كلمة المرور؟
+              </button>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              id="submit-btn"
+              type="submit"
+              class="w-full mt-2 py-3 px-4 rounded-xl bg-[#064E3B] hover:bg-[#047857] active:scale-[0.99] text-white text-sm font-semibold shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
+            >
+              <svg id="btn-spinner" class="hidden w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              <span id="btn-text" data-i18n="submitBtn">تسجيل الدخول</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Minimal Production Footer -->
+      <footer class="w-full max-w-md mx-auto pt-4 text-center">
+        <p data-i18n="footerCopy" class="text-xs text-[#475569]">
+          © 2026 منصة رفق. جميع الحقوق محفوظة.
+        </p>
+      </footer>
+    </main>
+
+    <!-- ===================================================================
+         2. VISUAL BRAND PANEL (Desktop Side Panel: Left in RTL, Right in LTR)
+    =================================================================== -->
+    <aside class="hidden lg:flex lg:w-[46%] xl:w-[48%] relative overflow-hidden bg-gradient-to-br from-[#064E3B] via-[#053D32] to-[#042F2E] text-white flex-col justify-between p-12 xl:p-16">
+
+      <!-- Subtle Low-Opacity Islamic Geometric Lattice Background -->
+      <svg class="absolute inset-0 w-full h-full opacity-[0.07] pointer-events-none select-none" aria-hidden="true">
+        <defs>
+          <pattern id="desktop-lattice" width="76" height="76" patternUnits="userSpaceOnUse">
+            <path
+              d="M38 4 L45 22 L63 15 L56 33 L74 40 L56 47 L63 65 L45 58 L38 76 L31 58 L13 65 L20 47 L2 40 L20 33 L13 15 L31 22 Z"
+              fill="none"
+              stroke="#E3C376"
+              stroke-width="1"
+            />
+            <circle cx="38" cy="40" r="9" fill="none" stroke="#FFFFFF" stroke-width="0.7" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#desktop-lattice)" />
+      </svg>
+
+      <!-- Soft Ambient Glows -->
+      <div class="absolute -top-24 -end-24 w-80 h-80 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-28 -start-24 w-80 h-80 rounded-full bg-[#C59B43]/15 blur-3xl pointer-events-none"></div>
+
+      <!-- Top Brand Logo & Wordmark -->
+      <div class="relative z-10 flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-md shrink-0">
+          <img src="../brand_assets/logo_icon/rifq_logo.svg" alt="شعار منصة رفق" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span data-i18n="brandName" class="text-2xl font-bold tracking-tight text-white">رفق</span>
+            <span class="w-2 h-2 rounded-xs rotate-45 bg-[#E3C376] inline-block mt-0.5"></span>
+          </div>
+          <p data-i18n="brandShort" class="text-xs text-emerald-100/80 mt-0.5">
+            منصة الحلقات القرآنية والعلوم الشرعية
+          </p>
+        </div>
+      </div>
+
+      <!-- Centerpiece: Large Emblem Highlight, Tagline & Framed Quranic Verse -->
+      <div class="relative z-10 my-auto py-8 space-y-8">
+        <!-- Main Tagline -->
+        <div class="space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-medium text-[#E3C376]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#E3C376]"></span>
+            <span data-i18n="panelBadge">بيئة تعليمية هادئة ومنظمة</span>
+          </div>
+          <h2 data-i18n="tagline" class="text-2xl xl:text-[28px] font-bold leading-snug text-white">
+            رفق — رفيقك في رحلة حفظ القرآن الكريم والعلوم الشرعية
+          </h2>
+        </div>
+
+        <!-- Beautifully Framed Quranic Verse Card -->
+        <div class="relative rounded-2xl bg-white/[0.06] backdrop-blur-md border border-[#E3C376]/30 p-7 shadow-lg">
+          <!-- Decorative Gold Corner Accents -->
+          <span class="absolute top-3 start-3 w-3 h-3 border-t-2 border-s-2 border-[#E3C376]/70 rounded-ts-sm"></span>
+          <span class="absolute bottom-3 end-3 w-3 h-3 border-b-2 border-e-2 border-[#E3C376]/70 rounded-be-sm"></span>
+
+          <p dir="rtl" class="font-quran text-2xl xl:text-[27px] text-center text-white leading-[2.2]">
+            ﴿ وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ ﴾
+          </p>
+          <div class="mt-4 flex items-center justify-center gap-3">
+            <span class="h-px w-10 bg-gradient-to-r from-transparent to-[#E3C376]/70"></span>
+            <span data-i18n="verseRef" class="text-xs font-medium text-[#E3C376]">سورة القمر — آية ١٧</span>
+            <span class="h-px w-10 bg-gradient-to-l from-transparent to-[#E3C376]/70"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtle Bottom Ornament Line -->
+      <div class="relative z-10 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-emerald-100/75">
+        <span data-i18n="panelFootNote">معاً نحو إتقان التلاوة وثبات الحفظ</span>
+        <span class="w-2 h-2 rounded-xs rotate-45 bg-[#E3C376]/80"></span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- =====================================================================
+       FORGOT PASSWORD MODAL (Accessible, Non-Blocking)
+  ===================================================================== -->
+  <div
+    id="forgot-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="forgot-modal-title"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4"
+  >
+    <div class="w-full max-w-sm rounded-2xl bg-white border border-slate-200 shadow-xl p-6 animate-fade-slide">
+      <div class="flex items-center justify-between mb-3">
+        <h3 id="forgot-modal-title" data-i18n="forgotTitle" class="text-base font-bold text-[#0F172A]">
+          استعادة كلمة المرور
+        </h3>
+        <button
+          type="button"
+          onclick="closeForgotModal()"
+          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+          aria-label="Close"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <p data-i18n="forgotDesc" class="text-xs text-[#475569] leading-relaxed mb-4">
+        أدخل بريدك الإلكتروني المسجّل لدينا وسنرسل لك رابطاً لإعادة تعيين كلمة المرور، أو تواصل مع إدارة فرعك مباشرة.
+      </p>
+
+      <form id="forgot-form" novalidate class="space-y-3">
+        <input
+          id="forgot-email"
+          type="email"
+          dir="ltr"
+          placeholder="name@example.com"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm bg-white border border-slate-200 text-[#0F172A] text-start outline-none focus:border-[#064E3B] focus:ring-2 focus:ring-emerald-900/10"
+        />
+        <p id="forgot-feedback" class="hidden text-xs font-medium"></p>
+        <div class="flex items-center gap-2 pt-1">
+          <button
+            type="submit"
+            data-i18n="forgotSubmit"
+            class="flex-1 py-2.5 px-4 rounded-xl bg-[#064E3B] hover:bg-[#047857] text-white text-xs font-semibold transition-colors"
+          >
+            إرسال الرابط
+          </button>
+          <button
+            type="button"
+            onclick="closeForgotModal()"
+            data-i18n="forgotCancel"
+            class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#475569] text-xs font-semibold transition-colors"
+          >
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       CLIENT-SIDE INTERACTION & BILINGUAL ENGINE (AR RTL / EN LTR)
+  ===================================================================== -->
+  <script>
+    const DICTIONARY = {
+      ar: {
+        pageTitle: 'منصة رفق — تسجيل الدخول',
+        brandName: 'رفق',
+        brandShort: 'منصة الحلقات القرآنية والعلوم الشرعية',
+        brandTagSmall: 'منصة رفق التعليمية',
+        langToggle: 'English',
+        welcomeTitle: 'أهلاً بك مجدداً',
+        welcomeSubtitle: 'سجّل دخولك لمتابعة رحلتك التعليمية',
+        emailLabel: 'البريد الإلكتروني',
+        passwordLabel: 'كلمة المرور',
+        rememberMe: 'تذكرني',
+        forgotPassword: 'نسيت كلمة المرور؟',
+        submitBtn: 'تسجيل الدخول',
+        submittingBtn: 'جارٍ تسجيل الدخول...',
+        footerCopy: '© 2026 منصة رفق. جميع الحقوق محفوظة.',
+        panelBadge: 'بيئة تعليمية هادئة ومنظمة',
+        tagline: 'رفق — رفيقك في رحلة حفظ القرآن الكريم والعلوم الشرعية',
+        verseRef: 'سورة القمر — آية ١٧',
+        panelFootNote: 'معاً نحو إتقان التلاوة وثبات الحفظ',
+        errEmail: 'يرجى إدخال بريد إلكتروني صحيح',
+        errPassword: 'يرجى إدخال كلمة المرور (6 أحرف على الأقل)',
+        toastTitle: 'تم تسجيل الدخول بنجاح',
+        toastSubtitle: 'جارٍ توجيهك إلى لوحة التحكم...',
+        forgotTitle: 'استعادة كلمة المرور',
+        forgotDesc: 'أدخل بريدك الإلكتروني المسجّل لدينا وسنرسل لك رابطاً لإعادة تعيين كلمة المرور، أو تواصل مع إدارة فرعك مباشرة.',
+        forgotSubmit: 'إرسال الرابط',
+        forgotCancel: 'إلغاء',
+        forgotSent: 'تم إرسال تعليمات إعادة التعيين إلى بريدك الإلكتروني.',
+      },
+      en: {
+        pageTitle: 'Rifq Platform — Sign In',
+        brandName: 'Rifq',
+        brandShort: 'Quranic & Islamic Studies Platform',
+        brandTagSmall: 'Rifq Learning Platform',
+        langToggle: 'العربية',
+        welcomeTitle: 'Welcome Back',
+        welcomeSubtitle: 'Sign in to continue your learning journey',
+        emailLabel: 'Email Address',
+        passwordLabel: 'Password',
+        rememberMe: 'Remember me',
+        forgotPassword: 'Forgot password?',
+        submitBtn: 'Sign In',
+        submittingBtn: 'Signing in...',
+        footerCopy: '© 2026 Rifq Platform. All rights reserved.',
+        panelBadge: 'A Serene & Structured Learning Space',
+        tagline: 'Rifq — Your gentle companion in Quran memorization & Islamic studies',
+        verseRef: 'Surah Al-Qamar — Ayah 17',
+        panelFootNote: 'Together toward mastery and lasting retention',
+        errEmail: 'Please enter a valid email address',
+        errPassword: 'Please enter your password (at least 6 characters)',
+        toastTitle: 'Signed in successfully',
+        toastSubtitle: 'Redirecting you to your dashboard...',
+        forgotTitle: 'Reset Password',
+        forgotDesc: 'Enter your registered email address and we will send you a password reset link, or reach out to your branch administration.',
+        forgotSubmit: 'Send Reset Link',
+        forgotCancel: 'Cancel',
+        forgotSent: 'Password reset instructions have been sent to your email.',
+      },
+    };
+
+    let currentLang = 'ar';
+    let isSubmitting = false;
+
+    /**
+     * Toggle between Arabic (RTL) and English (LTR) seamlessly
+     */
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      const dict = DICTIONARY[currentLang];
+
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.title = dict.pageTitle;
+
+      // Update all data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Clear visible validation errors on language switch to keep UI crisp
+      clearFieldErrors();
+    }
+
+    /**
+     * Show / Hide Password Toggle
+     */
+    function togglePasswordVisibility() {
+      const input = document.getElementById('password');
+      const eyeOpen = document.getElementById('eye-open');
+      const eyeClosed = document.getElementById('eye-closed');
+      const isHidden = input.type === 'password';
+
+      input.type = isHidden ? 'text' : 'password';
+      eyeOpen.classList.toggle('hidden', isHidden);
+      eyeClosed.classList.toggle('hidden', !isHidden);
+    }
+
+    /**
+     * Helper: Clear inline validation errors
+     */
+    function clearFieldErrors() {
+      ['email', 'password'].forEach((field) => {
+        const input = document.getElementById(field);
+        const errEl = document.getElementById(`${field}-error`);
+        const icon = document.getElementById(`${field}-icon`);
+
+        input.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-100');
+        input.classList.add('border-slate-200', 'focus:border-[#064E3B]');
+        icon.classList.remove('text-red-500');
+        icon.classList.add('text-slate-400');
+        errEl.classList.add('hidden');
+        errEl.textContent = '';
+      });
+    }
+
+    /**
+     * Helper: Show field validation error
+     */
+    function showFieldError(field, message) {
+      const input = document.getElementById(field);
+      const errEl = document.getElementById(`${field}-error`);
+      const icon = document.getElementById(`${field}-icon`);
+
+      input.classList.remove('border-slate-200', 'focus:border-[#064E3B]');
+      input.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-red-100');
+      icon.classList.remove('text-slate-400');
+      icon.classList.add('text-red-500');
+      errEl.textContent = message;
+      errEl.classList.remove('hidden');
+    }
+
+    /**
+     * Clear errors live when user types
+     */
+    document.getElementById('email').addEventListener('input', () => {
+      document.getElementById('email-error').classList.add('hidden');
+      document.getElementById('email').classList.remove('border-red-500');
+      document.getElementById('email-icon').classList.remove('text-red-500');
+    });
+
+    document.getElementById('password').addEventListener('input', () => {
+      document.getElementById('password-error').classList.add('hidden');
+      document.getElementById('password').classList.remove('border-red-500');
+      document.getElementById('password-icon').classList.remove('text-red-500');
+    });
+
+    /**
+     * Handle Login Form Submission
+     */
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (isSubmitting) return;
+
+      const dict = DICTIONARY[currentLang];
+      const emailVal = document.getElementById('email').value.trim();
+      const passwordVal = document.getElementById('password').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      clearFieldErrors();
+      let hasError = false;
+
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        showFieldError('email', dict.errEmail);
+        hasError = true;
+      }
+
+      if (!passwordVal || passwordVal.length < 6) {
+        showFieldError('password', dict.errPassword);
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Smooth loading state
+      isSubmitting = true;
+      const submitBtn = document.getElementById('submit-btn');
+      const spinner = document.getElementById('btn-spinner');
+      const btnText = document.getElementById('btn-text');
+
+      submitBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      btnText.textContent = dict.submittingBtn;
+
+      // Simulated authentication response
+      setTimeout(() => {
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        spinner.classList.add('hidden');
+        btnText.textContent = dict.submitBtn;
+
+        showSuccessToast();
+      }, 900);
+    });
+
+    /**
+     * Display non-blocking success toast
+     */
+    function showSuccessToast() {
+      const dict = DICTIONARY[currentLang];
+      const toast = document.getElementById('success-toast');
+      document.getElementById('toast-title').textContent = dict.toastTitle;
+      document.getElementById('toast-subtitle').textContent = dict.toastSubtitle;
+
+      toast.classList.remove('hidden');
+      clearTimeout(window._rifqToastTimer);
+      window._rifqToastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    /**
+     * Forgot Password Modal Controls
+     */
+    function openForgotModal() {
+      const modal = document.getElementById('forgot-modal');
+      const feedback = document.getElementById('forgot-feedback');
+      const emailInput = document.getElementById('forgot-email');
+
+      emailInput.value = document.getElementById('email').value.trim();
+      feedback.classList.add('hidden');
+      modal.classList.remove('hidden');
+      emailInput.focus();
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgot-modal').classList.add('hidden');
+    }
+
+    // Close modal on backdrop click or Escape key
+    document.getElementById('forgot-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'forgot-modal') closeForgotModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeForgotModal();
+    });
+
+    document.getElementById('forgot-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const dict = DICTIONARY[currentLang];
+      const emailVal = document.getElementById('forgot-email').value.trim();
+      const feedback = document.getElementById('forgot-feedback');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        feedback.textContent = dict.errEmail;
+        feedback.className = 'text-xs font-medium text-red-600';
+        return;
+      }
+
+      feedback.textContent = dict.forgotSent;
+      feedback.className = 'text-xs font-medium text-[#064E3B]';
+      setTimeout(() => closeForgotModal(), 1800);
+    });
+  </script>
+</body>
+</html>
