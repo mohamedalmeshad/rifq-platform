@@ -1,0 +1,16 @@
+export { User } from '../modules/users/user.model.js';
+export { Branch } from '../modules/branches/branch.model.js';
+export { Student } from '../modules/students/student.model.js';
+export { Teacher } from '../modules/teachers/teacher.model.js';
+export { Parent } from '../modules/parents/parent.model.js';
+export { Group } from '../modules/groups/group.model.js';
+export { Session } from '../modules/sessions/session.model.js';
+export { Attendance } from '../modules/attendance/attendance.model.js';
+export { QuranProgress } from '../modules/quranProgress/quranProgress.model.js';
+export { RevisionPlan } from '../modules/revisionPlans/revisionPlan.model.js';
+export { Assignment } from '../modules/assignments/assignment.model.js';
+export { AssignmentSubmission } from '../modules/assignments/assignmentSubmission.model.js';
+export { OnlineClass } from '../modules/onlineClasses/onlineClass.model.js';
+export { Evaluation } from '../modules/evaluations/evaluation.model.js';
+export { Notification } from '../modules/notifications/notification.model.js';
+export { SystemAudit } from '../modules/systemAudits/systemAudit.model.js';
